@@ -41,8 +41,8 @@ function preload(){
 }
 function create(){
     /////Make BoostMeters\\\\
-	boostMeter1 = new HealthBar(game, {width:100, x:50, y:20, animationDuration:1, bar:{color:'#29B463'}});
-	boostMeter2 = new HealthBar(game, {width:100, x:910, y:20, animationDuration:1, bar:{color:'#1E618C'}});
+	boostMeter1 = new HealthBar(game, {width:100, x:50, y:20, animationDuration:1, bar:{color:'#29B463'},bg:{color:'#ffffff'}});
+	boostMeter2 = new HealthBar(game, {width:100, x:910, y:20, animationDuration:1, bar:{color:'#1E618C'}, bg:{color:'#ffffff'}});
 
     ////Make Pads\\\\
     createPad(50,100);  //Top left
@@ -70,7 +70,7 @@ function create(){
     player2.body.angle = -90;
     
     //Add ball
-    ball = game.add.sprite(480,300,'ball');
+    ball = game.add.sprite(480,350,'ball');
     ball.scale.setTo(ballScale)
     game.physics.p2.enable(ball,debug);
     ball.body.setCircle(245*ballScale);
@@ -130,7 +130,7 @@ function update(){
     
     //Player 2
     player2.body.angularVelocity = 0;
-    if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER) && boost2 > 0 ){
+    if(game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE) && boost2 > 0 ){
         moveSpeed = originalSpeed * boostSpeed;
         drift2.x = player2.x;
         drift2.y = player2.y;
