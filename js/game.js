@@ -1,6 +1,6 @@
 /*global Phaser HealthBar*/
-var game = new Phaser.Game(960, 650, Phaser.CANVAS, 'fun-game', { preload: preload, create: create, update: update, render: render });
-//8:5 ratio // 960,600 + 50
+var game = new Phaser.Game(1010, 650, Phaser.CANVAS, 'fun-game', { preload: preload, create: create, update: update, render: render });
+//8:5 ratio // 960 +50,600 + 50
 
 //Vars
 var debug = false;
@@ -40,49 +40,48 @@ function preload(){
     game.load.image('ball','assets/ball.png');
 }
 function create(){
+    game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    //Make Wall  (x,y,width,height)
+    makeWall(360,25,480,5);
+    makeWall(12.5,137.5,2.5,27.5);
+    makeWall(997.5,137.5,2.5,27.5);
+	
     /////Make BoostMeters\\\\
-	boostMeter1 = new HealthBar(game, {width:100, x:50, y:20, animationDuration:1, bar:{color:'#29B463'},bg:{color:'#ffffff'}});
-	boostMeter2 = new HealthBar(game, {width:100, x:910, y:20, animationDuration:1, bar:{color:'#1E618C'}, bg:{color:'#ffffff'}});
+	boostMeter1 = new HealthBar(game, {width:100, height:50, x:75, y:25, animationDuration:1, bar:{color:'#29B463'},bg:{color:'#ABB2BA'}});
+	boostMeter2 = new HealthBar(game, {width:100, height:50, x:935, y:25, animationDuration:1, bar:{color:'#1E618C'}, bg:{color:'#ABB2BA'}});
 
     ////Make Pads\\\\
-    createPad(50,100);  //Top left
-    createPad(50,600); //Bottom left
-    createPad(910,100); //Top right
-    createPad(910,600);//Bottom right
-    createPad(480,100); //Mid top
-    createPad(480,600);//Mid bottom
+    createPad(75,100);  //Top left
+    createPad(75,600); //Bottom left
+    createPad(935,100); //Top right
+    createPad(935,600);//Bottom right
+    createPad(505,100); //Mid top
+    createPad(505,600);//Mid bottom
     
     //Add drift emitters
-    game.physics.startSystem(Phaser.Physics.ARCADE);
     drift1 = game.add.emitter(0, 0, 100);
     makeEmitter(drift1);
     drift2 = game.add.emitter(0,0,100);
     makeEmitter(drift2);
     
-    game.physics.startSystem(Phaser.Physics.P2JS);    
-    
     ///Add Players\\\
-    player = game.add.sprite(50,350,'green');
+    player = game.add.sprite(75,350,'green');
     addPhysics(player);
     player.body.angle = 90;
-    player2 = game.add.sprite(910,350,'blue');
+    player2 = game.add.sprite(935,350,'blue');
     addPhysics(player2);
     player2.body.angle = -90;
     
     //Add ball
-    ball = game.add.sprite(480,350,'ball');
+    ball = game.add.sprite(505,350,'ball');
     ball.scale.setTo(ballScale)
     game.physics.p2.enable(ball,debug);
     ball.body.setCircle(245*ballScale);
     // ball.body.damping = 0;
     // ball.body.restitution = 0.9;
-	
-	//Make Wall
-	wall = game.add.sprite(360,40,'black');
-	wall.scale.setTo(480,1);
-	game.physics.p2.enable(wall,debug);
-	wall.body.static = true;
-	
+
     ////Make Materials\\\\
     // var ballMat = game.physics.p2.createMaterial('ballMat',ball.body);
     // var carMat = game.physics.p2.createMaterial('carMat',[player.body,player2.body]);
@@ -197,4 +196,10 @@ function createPad(x,y){
 	pad.anchor.setTo(0.5);
 	pad.scale.setTo(2);
 	pads.push(pad);
+}
+function makeWall(x,y,width,height){
+    wall = game.add.sprite(x,y,'gray');
+	wall.scale.setTo(width,height);
+	game.physics.p2.enable(wall,debug);
+	wall.body.static = true;
 }
