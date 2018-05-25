@@ -40,13 +40,25 @@ function preload(){
     game.load.image('ball','assets/ball.png');
 }
 function create(){
+    
     game.physics.startSystem(Phaser.Physics.P2JS);
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-
+    game.physics.startSystem(Phaser.Physics.ARCADE);//Arcade is only for the emitters which i am to lazy to make myself
+    //Goals
+	goal1 = game.add.sprite(5,350,'black');
+	goal1.scale.setTo(1,15);
+	game.physics.p2.enable(goal1,debug);
+	goal1.body.static = true;
+	
     //Make Wall  (x,y,width,height)
-    makeWall(360,25,480,5);
+    makeWall(360,25,480,5);//Top
+    //Left
     makeWall(12.5,137.5,2.5,27.5);
+    makeWall(12.5,537.5,2.5,22.5);
+    //Right
     makeWall(997.5,137.5,2.5,27.5);
+    makeWall(997.5,537.5,2.5,22.5);
+	
+	
 	
     /////Make BoostMeters\\\\
 	boostMeter1 = new HealthBar(game, {width:100, height:50, x:75, y:25, animationDuration:1, bar:{color:'#29B463'},bg:{color:'#ABB2BA'}});
@@ -82,6 +94,9 @@ function create(){
     // ball.body.damping = 0;
     // ball.body.restitution = 0.9;
 
+    /////Add collisons\\\\\
+    
+    
     ////Make Materials\\\\
     // var ballMat = game.physics.p2.createMaterial('ballMat',ball.body);
     // var carMat = game.physics.p2.createMaterial('carMat',[player.body,player2.body]);
@@ -202,4 +217,11 @@ function makeWall(x,y,width,height){
 	wall.scale.setTo(width,height);
 	game.physics.p2.enable(wall,debug);
 	wall.body.static = true;
+	return wall;
+}
+function hitGoal1(){
+    alert('hitgoal1');
+}
+function hitGoal2(){
+    
 }
