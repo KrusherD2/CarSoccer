@@ -43,11 +43,20 @@ function create(){
     
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.startSystem(Phaser.Physics.ARCADE);//Arcade is only for the emitters which i am to lazy to make myself
+    
+    
     //Goals
 	goal1 = game.add.sprite(5,350,'black');
+	goal1.name = 'goal1';
 	goal1.scale.setTo(1,15);
 	game.physics.p2.enable(goal1,debug);
 	goal1.body.static = true;
+	
+	goal2 = game.add.sprite(1005,350,'black');
+	goal2.name = 'goal2';
+	goal2.scale.setTo(1,15);
+	game.physics.p2.enable(goal2,debug);
+	goal2.body.static = true;
 	
     //Make Wall  (x,y,width,height)
     makeWall(360,25,480,5);//Top
@@ -80,14 +89,18 @@ function create(){
     
     ///Add Players\\\
     player = game.add.sprite(75,350,'green');
+    player.name = 'player1';
     addPhysics(player);
     player.body.angle = 90;
     player2 = game.add.sprite(935,350,'blue');
+    player2.name = 'player2';
     addPhysics(player2);
     player2.body.angle = -90;
     
+    
     //Add ball
     ball = game.add.sprite(505,350,'ball');
+    ball.name = 'ball';
     ball.scale.setTo(ballScale)
     game.physics.p2.enable(ball,debug);
     ball.body.setCircle(245*ballScale);
@@ -95,7 +108,7 @@ function create(){
     // ball.body.restitution = 0.9;
 
     /////Add collisons\\\\\
-    
+    ball.body.onBeginContact.add(hitGoal, this);
     
     ////Make Materials\\\\
     // var ballMat = game.physics.p2.createMaterial('ballMat',ball.body);
@@ -219,9 +232,11 @@ function makeWall(x,y,width,height){
 	wall.body.static = true;
 	return wall;
 }
-function hitGoal1(){
-    alert('hitgoal1');
-}
-function hitGoal2(){
-    
+function hitGoal(bodyA, bodyB, shapeA, shapeB, equation){
+    if(bodyA.sprite.name === goal1.name){
+        alert('hit goal1');
+    }
+    if(bodyA.sprite.name === goal2.name){
+        alert('hit goal2');
+    }
 }
