@@ -17,6 +17,10 @@ var ball;
 var pads = [];
 var goal1;
 var goal2;
+var scoreText1;
+var scoreText2;
+var score1 = 0;
+var score2 = 0;
 var wall;
 
 ////Settings\\\\
@@ -67,11 +71,13 @@ function create(){
     makeWall(997.5,137.5,2.5,27.5);
     makeWall(997.5,537.5,2.5,22.5);
 	
-	
+	////Add Text\\\\
+	scoreText1 = game.add.text(130,10,'Player1: '+ score1);
+	scoreText2 = game.add.text(750,10,'Player2: '+ score2);
 	
     /////Make BoostMeters\\\\
 	boostMeter1 = new HealthBar(game, {width:100, height:50, x:75, y:25, animationDuration:1, bar:{color:'#29B463'},bg:{color:'#ABB2BA'}});
-	boostMeter2 = new HealthBar(game, {width:100, height:50, x:935, y:25, animationDuration:1, bar:{color:'#1E618C'}, bg:{color:'#ABB2BA'}});
+	boostMeter2 = new HealthBar(game, {width:100, height:50, x:935, y:25, animationDuration:1, bar:{color:'#1E618C'}, bg:{color:'#ABB2BA'}, flipped:true});
 
     ////Make Pads\\\\
     createPad(75,100);  //Top left
@@ -233,10 +239,14 @@ function makeWall(x,y,width,height){
 	return wall;
 }
 function hitGoal(bodyA, bodyB, shapeA, shapeB, equation){
-    if(bodyA.sprite.name === goal1.name){
-        alert('hit goal1');
-    }
-    if(bodyA.sprite.name === goal2.name){
-        alert('hit goal2');
+    if(bodyA){
+        if(bodyA.sprite.name === goal1.name){
+            score2++;
+            scoreText2.setText('Player2: '+score2);
+        }
+        if(bodyA.sprite.name === goal2.name){
+            score1++;
+            scoreText1.setText('Player1: '+score1);
+        }
     }
 }
