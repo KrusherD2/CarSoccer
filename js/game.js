@@ -163,7 +163,7 @@ function update(){
     
     //Player 2
     player2.body.angularVelocity = 0;
-    if(game.input.keyboard.isDown(Phaser.Keyboard.SPACE) && boost2 > 0 ){
+    if(game.input.keyboard.isDown(Phaser.Keyboard.CTRL) && boost2 > 0 ){
         moveSpeed = originalSpeed * boostSpeed;
         drift2.x = player2.x;
         drift2.y = player2.y;
